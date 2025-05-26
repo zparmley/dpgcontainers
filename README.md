@@ -6,6 +6,12 @@
 interface for creating objects - windows, groups, et al.  This library provides
 a collection of classes that can be used to create DPG objects as instances.
 
+## Installation
+
+```bash
+pip install dpgcontainers
+```
+
 ## Example usage
 
 ```python
