@@ -1,6 +1,6 @@
 [project]
 name = "dpgcontainers"
-version = "0.1.1"
+version = "0.1.2"
 description = "Functional dataclass implementations for DearPyGUI container types"
 readme = "README.md"
 authors = [
