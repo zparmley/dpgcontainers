@@ -17,7 +17,7 @@ import dearpygui.dearpygui as dpg
 from dpgcontainers.base import DPGContainersBase
 
 
-@dataclass
+@dataclass(eq=False)
 class TwoDHistogramSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -46,7 +46,7 @@ class TwoDHistogramSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ThreeDSlider(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -83,7 +83,7 @@ class ThreeDSlider(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Alias(DPGContainersBase):
     alias: str
     item: typing.Union[int, str]
@@ -95,7 +95,7 @@ class Alias(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class AreaSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -117,7 +117,7 @@ class AreaSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class AxisTag(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -138,7 +138,7 @@ class AxisTag(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class BarGroupSeries(DPGContainersBase):
     values: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     label_ids: typing.Union[typing.List[str], typing.Tuple[str, ...]]
@@ -163,7 +163,7 @@ class BarGroupSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class BarSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -185,7 +185,7 @@ class BarSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class BoolValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -202,7 +202,7 @@ class BoolValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Button(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -235,7 +235,7 @@ class Button(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class CandleSeries(DPGContainersBase):
     dates: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     opens: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -263,7 +263,7 @@ class CandleSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class CharRemap(DPGContainersBase):
     source: int
     target: int
@@ -280,7 +280,7 @@ class CharRemap(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Checkbox(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -309,7 +309,7 @@ class Checkbox(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ChildWindow(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -351,7 +351,7 @@ class ChildWindow(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Clipper(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -371,7 +371,7 @@ class Clipper(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class CollapsingHeader(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -403,7 +403,7 @@ class CollapsingHeader(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColorButton(DPGContainersBase):
     default_value: typing.Union[typing.List[int], typing.Tuple[int, ...]] = (0, 0, 0, 255)
     label: str | None = None
@@ -436,7 +436,7 @@ class ColorButton(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColorEdit(DPGContainersBase):
     default_value: typing.Union[typing.List[int], typing.Tuple[int, ...]] = (0, 0, 0, 255)
     label: str | None = None
@@ -480,7 +480,7 @@ class ColorEdit(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColorPicker(DPGContainersBase):
     default_value: typing.Union[typing.List[int], typing.Tuple[int, ...]] = (0, 0, 0, 255)
     label: str | None = None
@@ -525,7 +525,7 @@ class ColorPicker(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColorValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -542,7 +542,7 @@ class ColorValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Colormap(DPGContainersBase):
     colors: typing.List[typing.Union[typing.List[int], typing.Tuple[int, ...]]]
     qualitative: bool
@@ -560,7 +560,7 @@ class Colormap(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColormapButton(DPGContainersBase):
     default_value: typing.Union[typing.List[int], typing.Tuple[int, ...]] = (0, 0, 0, 255)
     label: str | None = None
@@ -590,7 +590,7 @@ class ColormapButton(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColormapRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -605,7 +605,7 @@ class ColormapRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColormapScale(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -635,7 +635,7 @@ class ColormapScale(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ColormapSlider(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -663,7 +663,7 @@ class ColormapSlider(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Combo(DPGContainersBase):
     items: typing.Union[typing.List[str], typing.Tuple[str, ...]] = ()
     label: str | None = None
@@ -699,7 +699,7 @@ class Combo(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class CustomSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -726,7 +726,7 @@ class CustomSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DatePicker(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -754,7 +754,7 @@ class DatePicker(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DigitalSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -774,7 +774,7 @@ class DigitalSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Double4Value(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -791,7 +791,7 @@ class Double4Value(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DoubleValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -808,7 +808,7 @@ class DoubleValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragDouble(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -844,7 +844,7 @@ class DragDouble(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragDoublex(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -881,7 +881,7 @@ class DragDoublex(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragFloat(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -917,7 +917,7 @@ class DragFloat(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragFloatx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -954,7 +954,7 @@ class DragFloatx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragInt(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -990,7 +990,7 @@ class DragInt(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragIntx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1027,7 +1027,7 @@ class DragIntx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragLine(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1055,7 +1055,7 @@ class DragLine(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragPayload(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1074,7 +1074,7 @@ class DragPayload(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragPoint(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1103,7 +1103,7 @@ class DragPoint(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DragRect(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1128,7 +1128,7 @@ class DragRect(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DrawLayer(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1148,7 +1148,7 @@ class DrawLayer(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DrawNode(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1165,7 +1165,7 @@ class DrawNode(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Drawlist(DPGContainersBase):
     width: int
     height: int
@@ -1190,7 +1190,7 @@ class Drawlist(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class DynamicTexture(DPGContainersBase):
     width: int
     height: int
@@ -1208,7 +1208,7 @@ class DynamicTexture(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ErrorSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -1232,7 +1232,7 @@ class ErrorSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FileDialog(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1258,7 +1258,7 @@ class FileDialog(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FileExtension(DPGContainersBase):
     extension: str
     label: str | None = None
@@ -1279,7 +1279,7 @@ class FileExtension(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FilterSet(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1299,7 +1299,7 @@ class FilterSet(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Float4Value(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1316,7 +1316,7 @@ class Float4Value(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FloatValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1333,7 +1333,7 @@ class FloatValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FloatVectValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1350,7 +1350,7 @@ class FloatVectValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Font(DPGContainersBase):
     file: str
     size: int
@@ -1368,7 +1368,7 @@ class Font(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FontChars(DPGContainersBase):
     chars: typing.Union[typing.List[int], typing.Tuple[int, ...]]
     label: str | None = None
@@ -1384,7 +1384,7 @@ class FontChars(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FontRange(DPGContainersBase):
     first_char: int
     last_char: int
@@ -1401,7 +1401,7 @@ class FontRange(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FontRangeHint(DPGContainersBase):
     hint: int
     label: str | None = None
@@ -1417,7 +1417,7 @@ class FontRangeHint(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class FontRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1432,7 +1432,7 @@ class FontRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Group(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1464,7 +1464,7 @@ class Group(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class HandlerRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1479,7 +1479,7 @@ class HandlerRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class HeatSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     rows: int
@@ -1507,7 +1507,7 @@ class HeatSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class HistogramSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     label: str | None = None
@@ -1535,7 +1535,7 @@ class HistogramSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Image(DPGContainersBase):
     texture_tag: typing.Union[int, str]
     label: str | None = None
@@ -1568,7 +1568,7 @@ class Image(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ImageButton(DPGContainersBase):
     texture_tag: typing.Union[int, str]
     label: str | None = None
@@ -1603,7 +1603,7 @@ class ImageButton(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ImageSeries(DPGContainersBase):
     texture_tag: typing.Union[int, str]
     bounds_min: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -1627,7 +1627,7 @@ class ImageSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InfLineSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     label: str | None = None
@@ -1647,7 +1647,7 @@ class InfLineSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputDouble(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1686,7 +1686,7 @@ class InputDouble(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputDoublex(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1724,7 +1724,7 @@ class InputDoublex(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputFloat(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1763,7 +1763,7 @@ class InputFloat(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputFloatx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1801,7 +1801,7 @@ class InputFloatx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputInt(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1839,7 +1839,7 @@ class InputInt(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputIntx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1876,7 +1876,7 @@ class InputIntx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class InputText(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1924,7 +1924,7 @@ class InputText(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Int4Value(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1941,7 +1941,7 @@ class Int4Value(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class IntValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1958,7 +1958,7 @@ class IntValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemActivatedHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1975,7 +1975,7 @@ class ItemActivatedHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemActiveHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -1992,7 +1992,7 @@ class ItemActiveHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemClickedHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2010,7 +2010,7 @@ class ItemClickedHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemDeactivatedAfterEditHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2027,7 +2027,7 @@ class ItemDeactivatedAfterEditHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemDeactivatedHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2044,7 +2044,7 @@ class ItemDeactivatedHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemDoubleClickedHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2062,7 +2062,7 @@ class ItemDoubleClickedHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemEditedHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2079,7 +2079,7 @@ class ItemEditedHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemFocusHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2096,7 +2096,7 @@ class ItemFocusHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemHandlerRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2111,7 +2111,7 @@ class ItemHandlerRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemHoverHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2128,7 +2128,7 @@ class ItemHoverHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemResizeHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2145,7 +2145,7 @@ class ItemResizeHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemToggledOpenHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2162,7 +2162,7 @@ class ItemToggledOpenHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ItemVisibleHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2179,7 +2179,7 @@ class ItemVisibleHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class KeyDownHandler(DPGContainersBase):
     key: int = 0
     label: str | None = None
@@ -2197,7 +2197,7 @@ class KeyDownHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class KeyPressHandler(DPGContainersBase):
     key: int = 0
     label: str | None = None
@@ -2215,7 +2215,7 @@ class KeyPressHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class KeyReleaseHandler(DPGContainersBase):
     key: int = 0
     label: str | None = None
@@ -2233,7 +2233,7 @@ class KeyReleaseHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class KnobFloat(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2266,7 +2266,7 @@ class KnobFloat(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class LineSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -2291,7 +2291,7 @@ class LineSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Listbox(DPGContainersBase):
     items: typing.Union[typing.List[str], typing.Tuple[str, ...]] = ()
     label: str | None = None
@@ -2323,7 +2323,7 @@ class Listbox(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class LoadingIndicator(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2353,7 +2353,7 @@ class LoadingIndicator(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Menu(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2378,7 +2378,7 @@ class Menu(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MenuBar(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2396,7 +2396,7 @@ class MenuBar(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MenuItem(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2424,7 +2424,7 @@ class MenuItem(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseClickHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2442,7 +2442,7 @@ class MouseClickHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseDoubleClickHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2460,7 +2460,7 @@ class MouseDoubleClickHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseDownHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2478,7 +2478,7 @@ class MouseDownHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseDragHandler(DPGContainersBase):
     button: int = 10
     threshold: float = -1
@@ -2497,7 +2497,7 @@ class MouseDragHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseMoveHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2514,7 +2514,7 @@ class MouseMoveHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseReleaseHandler(DPGContainersBase):
     button: int = -1
     label: str | None = None
@@ -2532,7 +2532,7 @@ class MouseReleaseHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class MouseWheelHandler(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2549,7 +2549,7 @@ class MouseWheelHandler(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Node(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2575,7 +2575,7 @@ class Node(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class NodeAttribute(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2599,7 +2599,7 @@ class NodeAttribute(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class NodeEditor(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2627,7 +2627,7 @@ class NodeEditor(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class NodeLink(DPGContainersBase):
     attr_1: typing.Union[int, str]
     attr_2: typing.Union[int, str]
@@ -2645,7 +2645,7 @@ class NodeLink(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class PieSeries(DPGContainersBase):
     x: float
     y: float
@@ -2672,7 +2672,7 @@ class PieSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Plot(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2729,7 +2729,7 @@ class Plot(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class PlotAnnotation(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2751,7 +2751,7 @@ class PlotAnnotation(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class PlotAxis(DPGContainersBase):
     axis: int
     label: str | None = None
@@ -2788,7 +2788,7 @@ class PlotAxis(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class PlotLegend(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2814,7 +2814,7 @@ class PlotLegend(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ProgressBar(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2844,7 +2844,7 @@ class ProgressBar(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class RadioButton(DPGContainersBase):
     items: typing.Union[typing.List[str], typing.Tuple[str, ...]] = ()
     label: str | None = None
@@ -2875,7 +2875,7 @@ class RadioButton(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class RawTexture(DPGContainersBase):
     width: int
     height: int
@@ -2894,7 +2894,7 @@ class RawTexture(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ScatterSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -2915,7 +2915,7 @@ class ScatterSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Selectable(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2948,7 +2948,7 @@ class Selectable(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Separator(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2967,7 +2967,7 @@ class Separator(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SeriesValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -2984,7 +2984,7 @@ class SeriesValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ShadeSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -3005,7 +3005,7 @@ class ShadeSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SimplePlot(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3038,7 +3038,7 @@ class SimplePlot(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderDouble(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3075,7 +3075,7 @@ class SliderDouble(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderDoublex(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3111,7 +3111,7 @@ class SliderDoublex(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderFloat(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3148,7 +3148,7 @@ class SliderFloat(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderFloatx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3184,7 +3184,7 @@ class SliderFloatx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderInt(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3221,7 +3221,7 @@ class SliderInt(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class SliderIntx(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3257,7 +3257,7 @@ class SliderIntx(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Spacer(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3278,7 +3278,7 @@ class Spacer(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Stage(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3292,7 +3292,7 @@ class Stage(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class StairSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -3314,7 +3314,7 @@ class StairSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class StaticTexture(DPGContainersBase):
     width: int
     height: int
@@ -3332,7 +3332,7 @@ class StaticTexture(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class StemSeries(DPGContainersBase):
     x: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     y: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -3354,7 +3354,7 @@ class StemSeries(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class StringValue(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3371,7 +3371,7 @@ class StringValue(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Subplots(DPGContainersBase):
     rows: int
     columns: int
@@ -3411,7 +3411,7 @@ class Subplots(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Tab(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3438,7 +3438,7 @@ class Tab(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TabBar(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3463,7 +3463,7 @@ class TabBar(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TabButton(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3492,7 +3492,7 @@ class TabButton(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Table(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3546,7 +3546,7 @@ class Table(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TableCell(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3565,7 +3565,7 @@ class TableCell(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TableColumn(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3603,7 +3603,7 @@ class TableColumn(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TableRow(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3622,7 +3622,7 @@ class TableRow(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TemplateRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3636,7 +3636,7 @@ class TemplateRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Text(DPGContainersBase):
     default_value: str = ''
     label: str | None = None
@@ -3667,7 +3667,7 @@ class Text(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TextPoint(DPGContainersBase):
     x: float
     y: float
@@ -3689,7 +3689,7 @@ class TextPoint(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TextureRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3704,7 +3704,7 @@ class TextureRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Theme(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3718,7 +3718,7 @@ class Theme(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ThemeColor(DPGContainersBase):
     target: int = 0
     value: typing.Union[typing.List[int], typing.Tuple[int, ...]] = (0, 0, 0, 255)
@@ -3736,7 +3736,7 @@ class ThemeColor(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ThemeComponent(DPGContainersBase):
     item_type: int = 0
     label: str | None = None
@@ -3754,7 +3754,7 @@ class ThemeComponent(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ThemeStyle(DPGContainersBase):
     target: int = -1
     x: float = 1.0
@@ -3773,7 +3773,7 @@ class ThemeStyle(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TimePicker(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3801,7 +3801,7 @@ class TimePicker(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Tooltip(DPGContainersBase):
     parent: typing.Union[int, str]
     label: str | None = None
@@ -3819,7 +3819,7 @@ class Tooltip(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class TreeNode(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3853,7 +3853,7 @@ class TreeNode(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ValueRegistry(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3867,7 +3867,7 @@ class ValueRegistry(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ViewportDrawlist(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3885,7 +3885,7 @@ class ViewportDrawlist(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class ViewportMenuBar(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3903,7 +3903,7 @@ class ViewportMenuBar(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class Window(DPGContainersBase):
     label: str | None = None
     user_data: Any | None = None
@@ -3945,7 +3945,7 @@ class Window(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dArrow(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -3967,7 +3967,7 @@ class dArrow(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dBezierCubic(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -3991,7 +3991,7 @@ class dBezierCubic(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dBezierQuadratic(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4014,7 +4014,7 @@ class dBezierQuadratic(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dCircle(DPGContainersBase):
     center: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     radius: float
@@ -4037,7 +4037,7 @@ class dCircle(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dEllipse(DPGContainersBase):
     pmin: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     pmax: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4060,7 +4060,7 @@ class dEllipse(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dImage(DPGContainersBase):
     texture_tag: typing.Union[int, str]
     pmin: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4083,7 +4083,7 @@ class dImage(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dImageQuad(DPGContainersBase):
     texture_tag: typing.Union[int, str]
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4110,7 +4110,7 @@ class dImageQuad(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dLayer(DPGContainersBase):
 
 
@@ -4121,7 +4121,7 @@ class dLayer(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dLine(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4142,7 +4142,7 @@ class dLine(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dPolygon(DPGContainersBase):
     points: typing.List[typing.List[float]]
     label: str | None = None
@@ -4163,7 +4163,7 @@ class dPolygon(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dPolyline(DPGContainersBase):
     points: typing.List[typing.List[float]]
     label: str | None = None
@@ -4184,7 +4184,7 @@ class dPolyline(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dQuad(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4208,7 +4208,7 @@ class dQuad(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dRectangle(DPGContainersBase):
     pmin: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     pmax: typing.Union[typing.List[float], typing.Tuple[float, ...]]
@@ -4233,7 +4233,7 @@ class dRectangle(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dText(DPGContainersBase):
     pos: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     text: str
@@ -4254,7 +4254,7 @@ class dText(DPGContainersBase):
 
 
 
-@dataclass
+@dataclass(eq=False)
 class dTriangle(DPGContainersBase):
     p1: typing.Union[typing.List[float], typing.Tuple[float, ...]]
     p2: typing.Union[typing.List[float], typing.Tuple[float, ...]]

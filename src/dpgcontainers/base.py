@@ -1,12 +1,14 @@
+from __future__ import annotations
+
 import abc
 from collections.abc import Callable
-import typing
-from typing import ClassVar
 from functools import wraps
+from typing import ClassVar
 
 import dearpygui.dearpygui as dpg  # type: ignore
-from dpgmagictag.magictag import MagicTag
+from dpgmagictag.magictag import MagicTag  # type: ignore
 
+from dpgcontainers.exceptions import NamedChildNotFound
 from dpgcontainers.exceptions import UnrenderedException
 
 
@@ -45,13 +47,27 @@ class DPGContainersBase(abc.ABC):
     @property
     def children(self) -> list['DPGContainersBase']:
         if not hasattr(self, '_children'):
-            self._children: list[DPGContainersBase] = []
-        return self._children
+            self._children: list['DPGContainersBase'] = []
+        return list(self._children)
+
+    @children.setter
+    def children(self, value: list['DPGContainersBase']):
+        self._children = value
 
     @property
-    def tagged_entities(self) -> dict[str, typing.Self]:
+    def parent(self) -> 'DPGContainersBase'|None:
+        if not hasattr(self, '_parent'):
+            self._parent: 'DPGContainersBase'|None = None
+        return self._parent
+
+    @parent.setter
+    def parent(self, value: 'DPGContainersBase'):
+        self._parent = value
+
+    @property
+    def tagged_entities(self) -> dict[str, 'DPGContainersBase']:
         if not hasattr(self, '_tagged_entities'):
-            self._tagged_entities: dict[str, typing.Self] = {}
+            self._tagged_entities: dict[str, 'DPGContainersBase'] = {}
             if hasattr(self, 'tag') and self.tag:
                 self._tagged_entities[self.tag] = self
         return self._tagged_entities
@@ -62,39 +78,132 @@ class DPGContainersBase(abc.ABC):
             self._named_child_indexes: dict[str, int] = {}
         return self._named_child_indexes
 
-    def __call__(self, *children, **named_children):
-        self.children.extend(children)
-        if named_children:
-            named_indexes = range(len(self.children), len(self.children)+len(named_children))
-            self.children.extend(named_children.values())
-            self.named_child_indexes.update(zip(named_children, named_indexes))
+    def search_named_children(self, name: str) -> 'DPGContainersBase':
+        if name in self.named_child_indexes:
+            index = self.named_child_indexes[name]
+            return self.children[index]
         for child in self.children:
-            self.tagged_entities.update(child.tagged_entities)
+            try:
+                named = child.search_named_children(name)
+            except NamedChildNotFound:
+                pass
+            else:
+                return named
+        raise NamedChildNotFound(name)
+
+
+    def __call__(self, *children: 'DPGContainersBase', **named_children: 'DPGContainersBase'):
+        for child in children:
+            self.add_child(child)
+
+        for name, child in named_children.items():
+            self.add_child(child, name=name)
+
         return self
 
-    def render(self, parent: int|str|None = None, tag_prefix: MagicTag | None = None):
+    def render(self, parent: int|str|'DPGContainersBase'|None = None, tag_prefix: MagicTag | None = None):
         if not hasattr(self, 'id_'):
             dpg_kwargs = {
                 arg: getattr(self, arg)
                 for arg in self.dpg_arguments
             }
+            if parent is None:
+                parent = self.parent
             if parent is not None:
-                dpg_kwargs['parent'] = parent
+                if isinstance(parent, DPGContainersBase):
+                    parent_id: int|str = parent.id_
+                else:
+                    parent_id = parent
+                    # parent = self.rendered_by_id[parent]
+                # self.parent = parent
+                dpg_kwargs['parent'] = parent_id
             if tag_prefix is not None:
                 if dpg_kwargs['tag'] != 0:
                     dpg_kwargs['tag'] = tag_prefix / dpg_kwargs['tag']
             id_ = self.dpg_function(**dpg_kwargs)
-            self.id_ = id_
+            self.id_: int = id_
             self.rendered_by_id[id_] = self
 
         for child in self.children:
-            child.render(parent=self.id_, tag_prefix=tag_prefix)
+            child.render(tag_prefix=tag_prefix)
 
         return self
 
+    def remove_child(self, child: 'DPGContainersBase'):
+        if child not in self.children:
+            raise ValueError(f'{child} not in self.children')
+
+        child_index = self._children.index(child)
+        for name, index in list(self.named_child_indexes.items()):
+            if child_index == index:
+                del self.named_child_indexes[name]
+            elif index > child_index:
+                self.named_child_indexes[name] -= 1
+
+        del self._children[child_index]
+
+    def add_child(
+        self,
+        child: 'DPGContainersBase',
+        prepend: bool=False,
+        before: 'DPGContainersBase'|None = None,
+        name: str|None = None
+    ) -> 'DPGContainersBase':
+        children = self.children
+        index = len(children)
+        if prepend:
+            assert before is None, 'Prepend and before are mutually exclusive'
+            index = 0
+        elif before is not None:
+            index = children.index(before)
+
+        children.insert(index, child)
+        for named_name, named_index in list(self.named_child_indexes.items()):
+            if named_index >= index:
+                self.named_child_indexes[named_name] += 1
+        if name:
+            self.named_child_indexes[name] = index
+
+        self.children = children
+        child.parent = self
+        return self
+
+    def move(
+            self,
+            parent: 'DPGContainersBase',
+            prepend: bool = False,
+            before: 'DPGContainersBase'|None = None,
+    ):
+        # assert is_rendered(parent), 'Parent must be rendered'
+        if self.parent is not None:
+            self.parent.remove_child(self)
+
+        parent.add_child(self, prepend=prepend, before=before)
+        if prepend:
+            assert before is None, 'prepend and before are mutually exclusive'
+            children = dpg.get_item_children(parent.id_, 1)
+            if children:
+                before = self.rendered_by_id[children[0]]
+
+        if is_rendered(self):
+            if before is not None:
+                dpg.move_item(self.id_, parent=parent.id_, before=before.id_)
+            else:
+                dpg.move_item(self.id_, parent=parent.id_)
+
+
     @assert_rendered
     def delete(self):
+        if self.parent is not None:
+            self.parent.remove_child(self)
         dpg.delete_item(self.id_)
+        del self.rendered_by_id[self.id_]
+        del self.id_
+
+    @assert_rendered
+    def clear(self):
+        for child in self.children:
+            child.delete()
 
     @property
     @assert_rendered

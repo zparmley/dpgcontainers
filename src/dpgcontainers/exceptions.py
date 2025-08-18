@@ -3,3 +3,8 @@ class DPGContainersException(Exception):
 
 class UnrenderedException(DPGContainersException):
     pass
+
+class NamedChildNotFound(DPGContainersException):
+    pass
+
+
