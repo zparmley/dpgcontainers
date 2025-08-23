@@ -221,6 +221,10 @@ class DPGContainersBase(abc.ABC):
         dpg.set_value(self.id_, value)
 
     @assert_rendered
+    def set_value(self, value):
+        self.value = value
+
+    @assert_rendered
     def configure(self, **kwargs):
         dpg.configure_item(self.id_, **kwargs)
 
