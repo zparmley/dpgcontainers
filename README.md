@@ -41,3 +41,11 @@ window.render()
 window(Button('button_2'))
 window.render()
 ```
+
+- added `find` method to base class, returns first found named child
+- `search_named_children` deprecated, use newly added `find` instead.
+- added `find_all`, returns a list of all named children matching name
+- added `search` and `search_all` methods, which function on named children but
+    allow regex pattern searching
+- Themes, Colormaps, and Fonts can now be bound via `instance.bind()` or
+    `instance.bind(item)` as appropriate

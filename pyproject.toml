@@ -1,12 +1,12 @@
 [project]
 name = "dpgcontainers"
-version = "0.1.2"
+version = "0.1.8"
 description = "Functional dataclass implementations for DearPyGUI container types"
 readme = "README.md"
 authors = [
     { name = "Zachary Parmley", email = "zachary.parmley@gmail.com" }
 ]
-requires-python = ">=3.11"
+requires-python = ">=3.13"
 dependencies = [
     "dearpygui>=2.0.0",
     "dpgmagictag>=0.1.0",
@@ -24,5 +24,10 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "ipython>=9.5.0",
+    "jedi>=0.19.2",
+    "mypy>=1.18.1",
+    "pynvim>=0.6.0",
     "pytest>=8.4.1",
+    "ruff>=0.13.0",
 ]

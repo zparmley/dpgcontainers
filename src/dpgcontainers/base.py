@@ -2,14 +2,53 @@ from __future__ import annotations
 
 import abc
 from collections.abc import Callable
-from functools import wraps
+import contextlib
+import functools
+import re
+import types
 from typing import ClassVar
 
 import dearpygui.dearpygui as dpg  # type: ignore
 from dpgmagictag.magictag import MagicTag  # type: ignore
 
-from dpgcontainers.exceptions import NamedChildNotFound
-from dpgcontainers.exceptions import UnrenderedException
+from dpgcontainers import exceptions
+
+
+def dpg_function_decorator(func: types.FunctionType):
+    '''Decorator for dearpygui.dearpygui functions
+    Any args or kwargs whose values are DPGContainersBase instances are
+    converted to instance.id_, as dearpygui expects.
+    '''
+    @functools.wraps(func)
+    def _inner(*args, **kwargs):
+        inner_args = [
+            arg.id_ if isinstance(arg, DPGContainersBase) else arg
+            for arg in args
+        ]
+        inner_kwargs = {
+            key: value.id_ if isinstance(value, DPGContainersBase) else value
+            for key, value in kwargs.items()
+        }
+        return func(*inner_args, **inner_kwargs)
+
+    return _inner
+
+
+def wrap_dpg(dpg: types.ModuleType):
+    '''Iterate through properties of the dearpygui module and decorate any functions
+    with dpg_function_decorator.
+    '''
+    for name in dir(dpg):
+        thing = getattr(dpg, name)
+        if isinstance(thing, types.FunctionType):
+            if thing.__module__ == 'dearpygui.dearpygui':
+                setattr(dpg, name, dpg_function_decorator(thing))
+    return dpg
+
+
+
+# Make dpg play nice with containers
+dpg = wrap_dpg(dpg)
 
 
 CONFIGURE_ITEM_KEYS = (
@@ -20,15 +59,33 @@ CONFIGURE_ITEM_KEYS = (
 
 
 def is_rendered(instance: 'DPGContainersBase'):
+    '''Simple check that an instance of DPGContainersBase has been rendered'''
     return hasattr(instance, 'id_')
 
+
 def assert_rendered(method) -> Callable:
-    @wraps(method)
+    '''Decorator to assert that an instance has been rendered before calling
+    the wrapped method.'''
+    @functools.wraps(method)
     def _inner(*args, **kwargs):
         if not is_rendered(args[0]):
-            raise UnrenderedException()
+            raise exceptions.UnrenderedException()
         return method(*args, **kwargs)
     return _inner
+
+
+''' Bind functions
+bind_colormap(item, source)
+
+bind_font(font)
+bind_item_font(item, font)
+
+bind_item_handler_registry(item, handler_registry)
+
+bind_item_theme(item, theme)
+bind_theme(theme)
+'''
+
 
 
 class DPGContainersBase(abc.ABC):
@@ -37,12 +94,35 @@ class DPGContainersBase(abc.ABC):
     dpg_function_cache: ClassVar[Callable | None] = None
     dpg_value_cast: ClassVar[type | None] = None
     rendered_by_id: ClassVar[dict[int, 'DPGContainersBase']] = dict()
+    dpg_bind_function_name: ClassVar[str | None] = None
+    dpg_bind_function_cache: ClassVar[Callable | None] = None
+    dpg_bind_item_function_name: ClassVar[str | None] = None
+    dpg_bind_item_function_cache: ClassVar[Callable | None] = None
+
+    classes: list[str]
+
 
     @property
     def dpg_function(self):
         if self.dpg_function_cache is None:
             self.dpg_function_cache = getattr(dpg, self.dpg_function_name)
         return self.dpg_function_cache
+
+    @property
+    def dpg_bind_function(self):
+        if self.dpg_bind_function_cache is None:
+            if self.dpg_bind_function_name is None:
+                raise exceptions.UnbindableException()
+            self.dpg_bind_function_cache = getattr(dpg, self.dpg_bind_function_name)
+        return self.dpg_bind_function_cache
+
+    @property
+    def dpg_bind_item_function(self):
+        if self.dpg_bind_item_function_cache is None:
+            if self.dpg_bind_item_function_name is None:
+                raise exceptions.UnbindableException()
+            self.dpg_bind_item_function_cache = getattr(dpg, self.dpg_bind_item_function_name)
+        return self.dpg_bind_item_function_cache
 
     @property
     def children(self) -> list['DPGContainersBase']:
@@ -78,18 +158,83 @@ class DPGContainersBase(abc.ABC):
             self._named_child_indexes: dict[str, int] = {}
         return self._named_child_indexes
 
-    def search_named_children(self, name: str) -> 'DPGContainersBase':
+    def find_all(self, name: str) -> list['DPGContainersBase']:
+        found = []
+        if name in self.named_child_indexes:
+            index = self.named_child_indexes[name]
+            found.append(self.children[index])
+        for child in self.children:
+            try:
+                named = child.find_all(name)
+            except exceptions.NamedChildNotFound:
+                pass
+            else:
+                found.extend(named)
+        if found:
+            return found
+        raise exceptions.NamedChildNotFound(name)
+
+    def find(self, name: str) -> 'DPGContainersBase':
         if name in self.named_child_indexes:
             index = self.named_child_indexes[name]
             return self.children[index]
         for child in self.children:
             try:
-                named = child.search_named_children(name)
-            except NamedChildNotFound:
+                named = child.find(name)
+            except exceptions.NamedChildNotFound:
                 pass
             else:
                 return named
-        raise NamedChildNotFound(name)
+        raise exceptions.NamedChildNotFound(name)
+
+    def find_by_class(self, class_: str) -> list['DPGContainersBase']:
+        results = []
+        if class_ in self.classes:
+            results.append(self)
+        for child in self.children:
+            results.extend(child.find_by_class(class_))
+        return results
+
+    def find_by_tag(self, tag: str) -> 'DPGContainersBase':
+        if hasattr(self, 'tag') and self.tag == tag:
+            return self
+        for child in self.children:
+            try:
+                return child.find_by_tag(tag)
+            except exceptions.TaggedNotFound:
+                pass
+        raise exceptions.TaggedNotFound(tag)
+
+    def search(self, pattern: str) -> 'DPGContainersBase':
+        matcher = re.compile(pattern)
+        for name in self.named_child_indexes:
+            if matcher.search(name):
+                index = self.named_child_indexes[name]
+                return self.children[index]
+        for child in self.children:
+            try:
+                found = child.search(pattern)
+            except exceptions.NamedChildNotFound:
+                pass
+            else:
+                return found
+        raise exceptions.NamedChildNotFound(pattern)
+
+    def search_all(self, pattern: str) -> list['DPGContainersBase']:
+        results = []
+        matcher = re.compile(pattern)
+        for name in self.named_child_indexes:
+            if matcher.search(name):
+                index = self.named_child_indexes[name]
+                results.append(self.children[index])
+        for child in self.children:
+            found = child.search_all(pattern)
+            results.extend(found)
+        return results
+
+    def search_named_children(self, name: str) -> 'DPGContainersBase':
+        '''Deprecated'''
+        return self.find(name)
 
 
     def __call__(self, *children: 'DPGContainersBase', **named_children: 'DPGContainersBase'):
@@ -114,13 +259,19 @@ class DPGContainersBase(abc.ABC):
                     parent_id: int|str = parent.id_
                 else:
                     parent_id = parent
-                    # parent = self.rendered_by_id[parent]
-                # self.parent = parent
                 dpg_kwargs['parent'] = parent_id
             if tag_prefix is not None:
                 if dpg_kwargs['tag'] != 0:
                     dpg_kwargs['tag'] = tag_prefix / dpg_kwargs['tag']
             id_ = self.dpg_function(**dpg_kwargs)
+
+            # Hack for popups - There is only dpg.popup, not dpg.add_popup, so
+            # we use the contextmanager as the dpg_function and enter it to
+            # get the id
+            if isinstance(id_, contextlib._GeneratorContextManager):
+                with id_ as id_:
+                    pass
+
             self.id_: int = id_
             self.rendered_by_id[id_] = self
 
@@ -234,6 +385,14 @@ class DPGContainersBase(abc.ABC):
             if key in CONFIGURE_ITEM_KEYS:
                 kwargs = {key: value}
                 dpg.configure_item(self.id_, **kwargs)
+
+    @assert_rendered
+    def bind(self, item: 'DPGContainersBase' | int | str | None = None):
+        if item is None:
+            self.dpg_bind_function(self)
+        else:
+            self.dpg_bind_item_function(item, self)
+        return self
 
     @assert_rendered
     def __enter__(self):
