@@ -22,7 +22,7 @@ def dpg_function_decorator(func: types.FunctionType):
     @functools.wraps(func)
     def _inner(*args, **kwargs):
         inner_args = [
-            arg.id_ if isinstance(arg, DPGContainersBase) else arg
+            arg.id_ if (hasattr(arg, '__class__') and isinstance(arg, DPGContainersBase)) else arg
             for arg in args
         ]
         inner_kwargs = {
@@ -278,6 +278,9 @@ class DPGContainersBase(abc.ABC):
         for child in self.children:
             child.render(tag_prefix=tag_prefix)
 
+        if hasattr(self, 'post_render'):
+            self.post_render()
+
         return self
 
     def remove_child(self, child: 'DPGContainersBase'):
@@ -298,15 +301,17 @@ class DPGContainersBase(abc.ABC):
         child: 'DPGContainersBase',
         prepend: bool=False,
         before: 'DPGContainersBase'|None = None,
+        after: 'DPGContainersBase'|None = None,
         name: str|None = None
     ) -> 'DPGContainersBase':
         children = self.children
         index = len(children)
         if prepend:
-            assert before is None, 'Prepend and before are mutually exclusive'
             index = 0
         elif before is not None:
             index = children.index(before)
+        elif after is not None:
+            index = children.index(after) + 1
 
         children.insert(index, child)
         for named_name, named_index in list(self.named_child_indexes.items()):
